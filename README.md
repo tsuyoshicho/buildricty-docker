@@ -20,12 +20,14 @@ Usage and Note
 動いているDockerのイメージの中を確認するには、attachしてください。
 
 Docker内で生成したフォントは以下のように取り出してください。
+プロビジョニングしての起動であれば`vagrant ssh`した時点で可能になっています。
 
 ```shell
 vagrant ssh
 sudo docker ps
 sudo docker cp container-id:/os2/Ricty-Regular.ttf .
-sudo docker cp container-id:/os2/Ricty-Bold.ttf .```
+sudo docker cp container-id:/os2/Ricty-Bold.ttf .
+```
 
 CoreOSは(Virtualboxの)vboxsfが効きません。ファイルは以下の手続きでコピーできます。
 
@@ -33,4 +35,3 @@ CoreOSは(Virtualboxの)vboxsfが効きません。ファイルは以下の手�
 vagrant ssh-config > .vagrant.ssh.config
 scp -F .vagrant.ssh.config core-01:/home/core/Ricty-*.ttf .
 ```
-
