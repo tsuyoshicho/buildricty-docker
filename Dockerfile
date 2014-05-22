@@ -1,39 +1,31 @@
-FROM debian
+FROM debian:wheezy
 
-MAINTAINER TSUYOSHI CHO
+MAINTAINER Tsuyoshi CHO <Tsuyoshi.CHO+develop@Gmail.com>
 
 # VOLUME ["/home/core"]
 
+# set locale
+RUN locale-gen en_US.UTF-8
+RUN update-locale LANG=en_US.UTF-8
+RUN DEBIAN_FRONTEND noninteractive
+RUN LC_ALL C
+RUN LC_ALL en_US.UTF-8
+
+# mirror
+RUN echo "deb http://cdn.debian.net/debian/ wheezy main contrib non-free" > /etc/apt/sources.list.d/mirror.jp.list
+RUN echo "deb http://cdn.debian.net/debian/ wheezy-updates main contrib" >> /etc/apt/sources.list.d/mirror.jp.list
+
 RUN apt-get update
-RUN apt-get install -y git
-RUN apt-get install -y fontforge
-RUN apt-get install -y wget
-RUN apt-get install -y zip
-RUN wget http://levien.com/type/myfonts/Inconsolata.otf
-RUN wget "http://sourceforge.jp/frs/redir.php?m=jaist&f=%2Fmix-mplus-ipa%2F59022%2Fmigu-1m-20130617.zip"
-RUN mv *.zip migu-1m.zip
+RUN apt-get install -y git --no-install-recommends
+RUN apt-get install -y fontforge --no-install-recommends
+RUN apt-get install -y wget --no-install-recommends
+RUN apt-get install -y zip --no-install-recommends
+RUN apt-get install -y ttf-inconsolata --no-install-recommends
+RUN apt-get install -y fonts-migmix --no-install-recommends
+RUN apt-get upgrade -y && apt-get clean && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/* 
+
 RUN git clone https://github.com/yascentur/Ricty.git
 
-CMD apt-get update
-CMD apt-get upgrade
+CMD echo "Build font was not implement yet."
 
-CMD rmdir -f work origin os2 migu-1m.zip migu-1m-*
-CMD mkdir work origin os2
-
-CMD cd Ricty;git fetch;git merge origin
-
-CMD cp Ricty/ricty_generator.sh work
-CMD cp Ricty/misc/os2version_reviser.sh work
-
-CMD cp Inconsolata.otf work
-
-CMD unzip migu-1m.zip
-CMD cp migu-1m-*/migu-1m-regular.ttf work
-CMD cp migu-1m-*/migu-1m-bold.ttf work
-
-CMD cd work;./ricty_generator.sh Inconsolata.otf migu-1m-regular.ttf migu-1m-bold.ttf
-CMD cp work/Ricty-*.ttf origin
-CMD cd work;./os2version_reviser.sh Ricty-*.ttf
-CMD mv work/Ricty-*.ttf os2
-
-CMD echo "Build font done."
+ENTRYPOINT [ "/bin/bash" ]
