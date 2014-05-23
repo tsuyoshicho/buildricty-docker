@@ -1,8 +1,6 @@
-FROM debian:wheezy
+FROM debian
 
 MAINTAINER Tsuyoshi CHO <Tsuyoshi.CHO+develop@Gmail.com>
-
-# VOLUME ["/home/core"]
 
 # mirror
 RUN echo "deb http://cdn.debian.net/debian/ wheezy main contrib non-free" > /etc/apt/sources.list.d/mirror.jp.list
@@ -28,7 +26,5 @@ RUN apt-get upgrade -y && apt-get clean && rm -rf /var/cache/apt/archives/* /var
 
 # git clone
 RUN git clone https://github.com/yascentur/Ricty.git
-
-CMD echo "Build font was not implement yet."
 
 ENTRYPOINT "/bin/bash"
