@@ -8,7 +8,7 @@ Usage and Note
 
 このセットでは以下の状態を実現しています。
 
-* Dockerfileを[docker index](index.docker.io)で追跡し、Trusted buildsとしてイメージ __ として扱っています。
+* Dockerfileを[docker index](index.docker.io)で追跡し、Trusted buildsとしてイメージ *tsuyoshicho/buildricty* として扱っています。
 * Vagrantfileによって、CoreOSが起動します。
 * `vagrant up --provision docker`で上記のDockerが動きます。
 

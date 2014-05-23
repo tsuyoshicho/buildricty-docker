@@ -33,7 +33,9 @@ Vagrant.configure("2") do |config|
     # when Docker Build
     # d.build_image "."
     # when Docker Image Provision
-    # images: [""]
+    # images: ["tsuyoshicho/buildricty"]
+    # pull image
+    d.pull_images "tsuyoshicho/buildricty"
   end
   
   config.vm.provider :vmware_fusion do |vb, override|
