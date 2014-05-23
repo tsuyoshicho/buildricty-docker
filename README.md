@@ -10,9 +10,10 @@ Usage and Note
 
 * Dockerfileを[docker index](index.docker.io)で追跡し、Trusted buildsとしてイメージ *tsuyoshicho/buildricty* として扱っています。
 * Vagrantfileによって、CoreOSが起動します。
-* `vagrant up --provision docker`で上記のDockerが動きます。
+* `vagrant up`で上記のDocker Imageをpullしてきます。
 
 このプロビジョニングを実施すると、Dockerのイメージ内でRictyが生成できる環境になっています。
+**環境が安定しきっていないため、扱いに注意が必要です。**
 
 フォント生成
 ============
@@ -25,11 +26,12 @@ Docker内部では、/Rictyに[yascentur/Ricty](https://github.com/yascentur/Ric
 以下のコマンドで、環境を更新しつつ、フォント生成できます。
 
 ```shell
-apt-get update
-apt-get upgrade -y
-cd /Ricty
-git pull
-./ricty_generator.sh auto
+$sudo docker run -t tsuyoshicho/buildricty
+#apt-get update
+#apt-get upgrade -y
+#cd /Ricty
+#git pull
+#./ricty_generator.sh auto
 ```
 
 必要なら、misc内の`os2version_reviser.sh`でWindows向けの調整を行ってください。
@@ -38,16 +40,16 @@ git pull
 ファイルコピー
 ==============
 
-動いているDockerのイメージの中を確認するには、attachしてください。
-もしくはプロビジョニング後いったんstopか仮想マシンを落してから、再起動し、runしてください。
+Dockerのイメージの中を確認するには、runの後Ctrl-p,Ctrl-qでdetachしてください。
+もしくは生成後、いったん終了してから、run -d でバックグラウンドで動作させてください。
 
 Docker内で生成したフォントは以下のように取り出してください。
 
 ```shell
-vagrant ssh
-sudo docker ps
-sudo docker cp container-id:/Ricty/Ricty-Regular.ttf .
-sudo docker cp container-id:/Ricty/Ricty-Bold.ttf .
+$vagrant ssh
+$sudo docker ps -a
+$sudo docker cp <container-id>:/Ricty/Ricty-Regular.ttf .
+$sudo docker cp <container-id>:/Ricty/Ricty-Bold.ttf .
 ```
 
 CoreOSは(Virtualboxの)vboxsfが効きません。ファイルは以下の手続きでコピーできます。
@@ -57,3 +59,5 @@ CoreOSは(Virtualboxの)vboxsfが効きません。ファイルは以下の手�
 vagrant ssh-config > .vagrant.ssh.config
 scp -F .vagrant.ssh.config core-01:/home/core/Ricty-*.ttf .
 ```
+
+なお、逆にDockerfileのテストなどではscpでファイルを入れることで確認などができます。
