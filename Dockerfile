@@ -27,4 +27,10 @@ RUN apt-get upgrade -y && apt-get clean && rm -rf /var/cache/apt/archives/* /var
 # git clone
 RUN git clone https://github.com/yascentur/Ricty.git
 
+# work on /Ricty
+WORKDIR /Ricty
+
+# copy script to docker image
+COPY build.sh /Ricty/build.sh
+
 ENTRYPOINT "/bin/bash"

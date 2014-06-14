@@ -8,12 +8,11 @@ Usage and Note
 
 このセットでは以下の状態を実現しています。
 
-* Dockerfileを[docker index](index.docker.io)で追跡し、Trusted buildsとしてイメージ *tsuyoshicho/buildricty* として扱っています。
+* Dockerfileを[Docker hub](https://hub.docker.com)で追跡し、Trusted buildsとしてイメージ *tsuyoshicho/buildricty* として扱っています。
 * Vagrantfileによって、CoreOSが起動します。
 * `vagrant up`で上記のDocker Imageをpullしてきます。
 
 このプロビジョニングを実施すると、Dockerのイメージ内でRictyが生成できる環境になっています。
-**環境が安定しきっていないため、扱いに注意が必要です。**
 
 フォント生成
 ============
@@ -23,15 +22,21 @@ Vagrant向けCoreOS環境の[coreos/coreos-vagrant](https://github.com/coreos/co
 
 Docker内部では、/Rictyに[yascentur/Ricty](https://github.com/yascentur/Ricty)がクローンされており、fontforgeや必要フォントがセットアップされています。
 
-以下のコマンドで、環境を更新しつつ、フォント生成できます。
+また、`build.sh`として、以下の処理を行うスクリプトが含まれます。
 
 ```shell
-$sudo docker run -t tsuyoshicho/buildricty
+#cd /Ricty
 #apt-get update
 #apt-get upgrade -y
-#cd /Ricty
 #git pull
 #./ricty_generator.sh auto
+```
+
+Dockerコンテナの実行と接続を行い、スクリプトを実行します。コンテナ起動時の作業ディレクトリは/Rictyになっています。
+
+```shell
+$sudo docker run -i -t tsuyoshicho/buildricty
+/Ricty#./build.sh
 ```
 
 必要なら、misc内の`os2version_reviser.sh`でWindows向けの調整を行ってください。
@@ -40,8 +45,8 @@ $sudo docker run -t tsuyoshicho/buildricty
 ファイルコピー
 ==============
 
-Dockerのイメージの中を確認するには、runの後Ctrl-p,Ctrl-qでdetachしてください。
-もしくは生成後、いったん終了してから、run -d でバックグラウンドで動作させてください。
+Dockerのイメージの中を確認するには、runの後Ctrl-p,Ctrl-qでdetachしてください。IDはpsコマンドで特定してください。
+もしくは生成後、いったん終了してから、ps -aで作業を終了したコンテナのIDを特定してください。
 
 Docker内で生成したフォントは以下のように取り出してください。
 
@@ -53,7 +58,7 @@ $sudo docker cp <container-id>:/Ricty/Ricty-Bold.ttf .
 ```
 
 CoreOSは(Virtualboxの)vboxsfが効きません。ファイルは以下の手続きでコピーできます。
-もしくは、NFS Folderを設定してもよいでしょう。
+もしくは、NFS Folderやrsync Folderが設定可能であれば、それでもよいでしょう。
 
 ```shell
 vagrant ssh-config > .vagrant.ssh.config
