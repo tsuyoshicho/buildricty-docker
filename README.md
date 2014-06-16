@@ -1,4 +1,7 @@
-﻿buildricty-docker
+_Docker hubでのビルド失敗(おそらくCOPYが使えない)のため、一時的にDockerfileを前に戻しています。_
+
+
+buildricty-docker
 =================
 
 Ricty Font generating environment by Docker (with Vagrant / CoreOS baseset)
