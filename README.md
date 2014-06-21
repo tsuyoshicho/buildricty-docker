@@ -1,6 +1,4 @@
-_Docker hubでのビルド失敗(おそらくCOPYが使えない)のため、一時的にDockerfileを前に戻しています。_
-
-
+﻿
 buildricty-docker
 =================
 
@@ -39,7 +37,7 @@ Dockerコンテナの実行と接続を行い、スクリプトを実行しま�
 
 ```shell
 $sudo docker run -i -t tsuyoshicho/buildricty
-/Ricty#./build.sh
+/Ricty#sh ./build.sh
 ```
 
 必要なら、misc内の`os2version_reviser.sh`でWindows向けの調整を行ってください。
