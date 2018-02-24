@@ -21,7 +21,7 @@ Usage and Note
 環境としては
 Vagrant向けCoreOS環境の[coreos/coreos-vagrant](https://github.com/coreos/coreos-vagrant)をベースとしています。
 
-Docker内部では、/Rictyに[yascentur/Ricty](https://github.com/yascentur/Ricty)がクローンされており、fontforgeや必要フォントがセットアップされています。
+Docker内部では、/Rictyに[Ricty](http://www.rs.tus.ac.jp/yyusa/ricty.html)のスクリプトがコピーされており、fontforgeや必要フォントがセットアップされています。
 
 また、`build.sh`として、以下の処理を行うスクリプトが含まれます。
 
@@ -29,7 +29,6 @@ Docker内部では、/Rictyに[yascentur/Ricty](https://github.com/yascentur/Ric
 #cd /Ricty
 #apt-get update
 #apt-get upgrade -y
-#git pull
 #./ricty_generator.sh auto
 ```
 
@@ -40,7 +39,7 @@ $sudo docker run -i -t tsuyoshicho/buildricty
 /Ricty#sh ./build.sh
 ```
 
-必要なら、misc内の`os2version_reviser.sh`でWindows向けの調整を行ってください。
+必要なら、`os2version_reviser.sh`でWindows向けの調整を行ってください。
 
 
 ファイルコピー
