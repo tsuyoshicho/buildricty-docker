@@ -3,7 +3,7 @@ FROM debian:stretch
 MAINTAINER Tsuyoshi CHO <Tsuyoshi.CHO+develop@Gmail.com>
 
 # mirror
-RUN echo "deb http://cdn.debian.net/debian/ stretch  main contrib non-free" > /etc/apt/sources.list.d/mirror.list
+RUN echo "deb http://cdn.debian.net/debian/ stretch main contrib non-free" > /etc/apt/sources.list.d/mirror.list
 RUN echo "deb http://cdn.debian.net/debian/ stretch-updates main contrib" >> /etc/apt/sources.list.d/mirror.list
 RUN echo "deb http://cdn.debian.net/debian/ stretch-backports main contrib non-free" >> /etc/apt/sources.list.d/mirror.list
 RUN /bin/rm /etc/apt/sources.list
@@ -22,7 +22,7 @@ RUN update-locale LANG=en_US.UTF-8
 RUN apt-get install -y --no-install-recommends wget
 RUN apt-get install -y --no-install-recommends ca-certificates openssl
 RUN apt-get install -y --no-install-recommends fontforge
-RUN apt-get install -y --no-install-recommends ttf-inconsolata fonts-migmix
+RUN apt-get install -y --no-install-recommends fonts-inconsolata fonts-migmix
 RUN apt-get upgrade -y && apt-get clean && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
 
 # wget file
